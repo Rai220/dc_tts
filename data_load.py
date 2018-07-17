@@ -13,7 +13,7 @@ import tensorflow as tf
 from utils import *
 import codecs
 import re
-import os
+import os, sys
 import unicodedata
 
 def load_vocab():
@@ -87,7 +87,7 @@ def load_data(mode="train"):
 
 def get_batch():
     """Loads training data and put them in queues"""
-    with tf.device('/cpu:0'):
+    with tf.device('/GPU:0'):
         # Load data
         fpaths, text_lengths, texts = load_data() # list
         maxlen, minlen = max(text_lengths), min(text_lengths)
@@ -104,8 +104,12 @@ def get_batch():
         if hp.prepro:
             def _load_spectrograms(fpath):
                 fname = os.path.basename(fpath)
-                mel = "mels/{}".format(fname.replace("wav", "npy"))
-                mag = "mags/{}".format(fname.replace("wav", "npy"))
+                if sys.version_info[0] == 3:
+                    mel = "mels/{}".format(fname.decode().replace("wav", "npy"))
+                    mag = "mags/{}".format(fname.decode().replace("wav", "npy"))
+                else:
+                    mel = "mels/{}".format(fname.replace("wav", "npy"))
+                    mag = "mags/{}".format(fname.replace("wav", "npy"))
                 return fname, np.load(mel), np.load(mag)
 
             fname, mel, mag = tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32, tf.float32])
@@ -129,4 +133,3 @@ def get_batch():
                                             dynamic_pad=True)
 
     return texts, mels, mags, fnames, num_batch
-

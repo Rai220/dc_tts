@@ -10,7 +10,8 @@ class Hyperparams:
     prepro = True  # if True, run `python prepro.py` first before running `python train.py`.
     
     # signal processing
-    sr = 22050  # Sampling rate.
+    #sr = 22050  # Sampling rate.
+    sr = 16000
     n_fft = 2048  # fft points (samples)
     frame_shift = 0.0125  # seconds
     frame_length = 0.05  # seconds
@@ -32,15 +33,17 @@ class Hyperparams:
     attention_win_size = 3
 
     # data
-    data = "/data/private/voice/LJSpeech-1.0"
+    #data = "/home/krestnikov/dc_tts/LJSpeech-1.1/LJSpeech-1.1"
+    data = "/home/krestnikov/dc_tts/rus/LJSpeech-1.1"
     # data = "/data/private/voice/kate"
     test_data = 'harvard_sentences.txt'
-    vocab = "PE abcdefghijklmnopqrstuvwxyz'.?" # P: Padding, E: EOS.
-    max_N = 180 # Maximum number of characters.
-    max_T = 210 # Maximum number of mel frames.
+    #vocab = "PE abcdefghijklmnopqrstuvwxyz'.?" # P: Padding, E: EOS.
+    vocab = "PE абвгдеёжзиклмнопрстуфхцчшщъыьэюя!?:.,-" # P: Padding, E: EOS.
+    max_N = 220 # Maximum number of characters.
+    max_T = 250 # Maximum number of mel frames.
 
     # training scheme
-    lr = 0.001 # Initial learning rate.
+    lr = 0.002 # Initial learning rate.
     logdir = "logdir/LJ01"
     sampledir = 'samples'
     B = 32 # batch size

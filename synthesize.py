@@ -61,7 +61,7 @@ def synthesize():
         for i, mag in enumerate(Z):
             print("Working on file", i+1)
             wav = spectrogram2wav(mag)
-            write(hp.sampledir + "/{}.wav".format(i+1), hp.sr, wav)
+            write(hp.sampledir + "/{}-5.wav".format(i+1), hp.sr, wav)
 
 if __name__ == '__main__':
     synthesize()

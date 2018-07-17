@@ -20,10 +20,8 @@ import tensorflow as tf
 def get_spectrograms(fpath):
     '''Parse the wave file in `fpath` and
     Returns normalized melspectrogram and linear spectrogram.
-
     Args:
       fpath: A string. The full path of a sound file.
-
     Returns:
       mel: A 2d array of shape (T, n_mels) and dtype of float32.
       mag: A 2d array of shape (T, 1+n_fft/2) and dtype of float32.
@@ -66,10 +64,8 @@ def get_spectrograms(fpath):
 
 def spectrogram2wav(mag):
     '''# Generate wave file from linear magnitude spectrogram
-
     Args:
       mag: A numpy array of (T, 1+n_fft//2)
-
     Returns:
       wav: A 1-D numpy array.
     '''
@@ -115,7 +111,6 @@ def invert_spectrogram(spectrogram):
 
 def plot_alignment(alignment, gs, dir=hp.logdir):
     """Plots the alignment.
-
     Args:
       alignment: A numpy array with shape of (encoder_steps, decoder_steps)
       gs: (int) global step.
@@ -160,4 +155,3 @@ def load_spectrograms(fpath):
     # Reduction
     mel = mel[::hp.r, :]
     return fname, mel, mag
-

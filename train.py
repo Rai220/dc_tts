@@ -140,9 +140,13 @@ if __name__ == '__main__':
 
     g = Graph(num=num); print("Training Graph loaded")
 
-    logdir = hp.logdir + "-" + str(num)
+    logdir = hp.logdir + "-" + str(num)    
     sv = tf.train.Supervisor(logdir=logdir, save_model_secs=0, global_step=g.global_step)
-    with sv.managed_session() as sess:
+
+    # Операции, которые не поддерживают на GPU выполняем на CPU.
+    sess_config = tf.ConfigProto(allow_soft_placement=True)
+    with sv.managed_session(config=sess_config) as sess:
+    #with sv.managed_session() as sess:
         while 1:
             for _ in tqdm(range(g.num_batch), total=g.num_batch, ncols=70, leave=False, unit='b'):
                 gs, _ = sess.run([g.global_step, g.train_op])
